@@ -175,8 +175,7 @@ a { color: var(--head); text-decoration: underline; }
 <header class="top">
  <div class="top-row"><h1>BHPS membership form</h1><div class="top-right"><button type="button" class="btn mini danger" id="b-new">Clear all</button></div></div>
  <div class="confirm" id="confirm" hidden><p>This clears everything typed into the form on this device. Continue?</p><button type="button" class="btn pri" id="b-new-yes">Clear all</button><button type="button" class="btn" id="b-new-no">Cancel</button></div>
- <div class="bar" role="progressbar" aria-label="Required items completed" aria-valuemin="0" aria-valuemax="4" id="bar"><i id="barfill"></i></div>
- <p class="priv"><span class="count" id="count" aria-live="polite"></span> · This page does not send what you type anywhere.</p>
+ <p class="priv">This page does not send what you type anywhere.</p>
 </header>
 <section class="card" aria-labelledby="h-intro"><h2 id="h-intro">Application to become a Member or a Friend</h2><p class="text">A <b>Member</b> is entitled to free entrance to High Holy Day services and to vote at General Meetings of the Synagogue under its constitution.</p><p class="text">Fill in the form, save it as a Word file, sign it and send it to the Synagogue at info@bhps-online.org or 6 Lansdowne Road, Hove, BN3 1FF.</p><p class="text">If you would prefer to fill your details directly into a Word document, <a href="membership_form.docx" download="BHPS membership form.docx">click here to download the blank copy</a>.</p></section>
 <section class="card" aria-labelledby="h-home"><h2 id="h-home">Address</h2><div id="s-home"></div><div id="s-count"></div></section>
@@ -344,12 +343,8 @@ function update() {
   A.concat(B).forEach(function (f) { if (f.showIf) { var q = $("q-"+f.id); if (q) q.hidden = !visible(f); } });
   $("card-b").hidden = !two();
   $("kid-area").hidden = get("hasKids") !== "Yes";
-  var c = check(), done = c.total - c.miss.length;
-  $("count").textContent = done + " of " + c.total + " completed";
-  $("barfill").style.width = (100*done/c.total) + "%";
-  $("bar").setAttribute("aria-valuemax", c.total); $("bar").setAttribute("aria-valuenow", done);
   Array.prototype.forEach.call(document.querySelectorAll(".bad"), function (n) { n.classList.remove("bad"); });
-  if (showErrors) c.miss.forEach(function (x) { $(x[1]).classList.add("bad"); });
+  if (showErrors) check().miss.forEach(function (x) { $(x[1]).classList.add("bad"); });
 }
 
 // ---------- output ----------
